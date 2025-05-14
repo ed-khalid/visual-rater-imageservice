@@ -15,7 +15,7 @@ def find_histogram(clt):
     :param: clt
     :return:hist
     """
-    numLabels = np.arrange(0,len(np.unique(clt.labels_)) + 1) 
+    numLabels = np.arange(0,len(np.unique(clt.labels_)) + 1) 
     (hist, _) = np.histogram(clt.labels_, bins=numLabels) 
     hist = hist.astype("float")
     hist /= hist.sum()
@@ -28,4 +28,6 @@ def get_color_for_image(imageUrl):
     clt = KMeans(n_clusters=3) 
     clt.fit(image)
     hist = find_histogram(clt)
-    return hist
+    dominant_index = np.argmax(hist)
+    dominant_color = clt.cluster_centers_[dominant_index].astype(int) 
+    return dominant_color
